@@ -21,7 +21,7 @@ def handler(event):
         for l in lines:
             f.write(l)
         f.close()
-        stc = '{}'.format(c)        
+        stc = '{}'.format(c)
         d = {"char": stc}
         r = requests.post('http://127.0.0.1:3000/fished', data=d)
 
