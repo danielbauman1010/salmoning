@@ -3,14 +3,21 @@ var bodyParser = require('body-parser')
 var app = express()
 var fs = require('fs')
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({     
+app.use(bodyParser.urlencoded({
   extended: true
 }));
+var log = {};
+
+var content="";
 app.listen(3000)
 app.get('/',function(request,response) {
-  response.end('I\'m up');
+  var neatResponse=""
+  for(user in log){
+    neatResponse= neatResponse + "\n"+user+":\n"+log[user]
+  }
+  response.end(neatResponse);
 });
-var content="";
+currentContent="";
 app.post('/fished', function(request, response){
   fs.readFile('log', function read(err, data) {
       if (err) {
@@ -18,15 +25,23 @@ app.post('/fished', function(request, response){
       }
       content = data;
   });
-  content=content+"\n"+JSON.stringify(request.body)
-  processFile();
+  currentContent = JSON.stringify(request.body)
+  content=content+"\n"+ currentContent
+  processFile(request.body);
   console.log(request.body);
   response.send(request.body);
 });
-function processFile() {
+function processFile(req) {
   fs.writeFile("log", content, function(err) {
     if(err) {
         return console.log(err);
     }
   });
+  for(u in req) {
+    if(u in log) {
+      log[u] = log[u] + req[u]
+    } else {
+      log[u]=req[u]
+    }
+  }
 }
